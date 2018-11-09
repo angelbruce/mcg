@@ -1,0 +1,45 @@
+<html ng-app='com.abl.main'>
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <link href="../css/main.css" rel="stylesheet"></link>
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/angular.min.js"></script>
+        <script type="text/javascript" src="../js/controller/main.js"></script>
+    </head>
+    <body ng-controller='main'>
+        <div class="toolbar">
+           <div class="product">
+                <div class="left"><img src="../imgs/logo.png" /></div>
+                <div class="left logo">这是一个神奇的网站</div>
+                <div class="tool-item logout right"><img src="../imgs/logout.png" /></div>
+                <div class="tool-item right"><a>管理员</a></div>
+                <div class="tool-item right" time></div>
+                <div class="tool-item right" search></div>
+            </div>
+        </div>
+        <div class="content">
+            <div ng-repeat="item in tasks track by $index">
+                <div ng-if="item" dialog item="item" close="close(item)"></div>
+            </div>
+            <ul class="card_group" >
+                <li class="card_item" ng-repeat='fn in fns' ng-click="open(fn)">
+                    <div><img ng-src="{{fn.img}}" /></div>
+                    <div><a>{{fn.title}}</a></div>
+                </li>
+            </ul>
+        </div>
+        <div class="taskbar">
+            <div class='task_item_i' ng-click="setting()">
+                <div><img src="../imgs/startup.png" /></div>
+            </div>
+            <div class='task_item' ng-repeat="task in tasks track by $index" ng-click="toggle(task)" contextmenu item="task">
+                <div><img ng-src="{{task.img}}" /></div>
+                <div><a>{{task.title}}</a></div>
+            </div>
+            <div class='task_item_i right' ng-click="resetAll()">
+                <div><img src="../imgs/desk.png" /></div>
+            </div>
+        </div>
+    </body>
+</html>

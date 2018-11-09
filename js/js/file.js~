@@ -1,0 +1,8 @@
+$(function($){
+	$.fn.extend({
+		upfile:function () {
+		
+		
+		}	
+	});
+})(jQuery);

@@ -1,0 +1,28 @@
+.upfile{
+    width:30px;height:30px;line-height:30px;color:#3a3a3a;
+    border-radius: 3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-width:1px;
+    border: color #3a3a3a;
+    border-style: solid;
+    text-align:center;
+    vertical-align: middle;
+    font-size:18px;
+}
+
+.upfile img {
+    width:30px;height:30px;
+}
+
+.upfile:hover{
+    border-width: 1px;
+    border-color:#69c9f0;
+    background-color:#69c9f0;
+    cursor: pointer;
+    color:#fff;
+    font-weight: bold;
+    border-style: dotted;
+}
+
+

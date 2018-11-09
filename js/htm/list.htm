@@ -1,0 +1,58 @@
+<html ng-app="abl">
+
+<head>
+    <title>样本标记</title>
+    <script src="jquery.js"></script>
+    <script src="angular.min.js"></script>
+    <script type="text/javascript">
+        var app = angular.module("abl", []);
+        app.controller('samplemark', [$scope, $http, function (scope, http) {
+            scope.samples = []
+
+            // initialze the data
+            scope.initialize = function () {
+                http.post("/sample", {}).then(function (result) {
+                    var data = result.data;
+                    scope.samples = data || [];
+                });
+            };
+
+            scope.saveMark = function () {
+                http.post("/mark", $.param(scope.samples)).then(function (result) {
+                    var data = result.data;
+                    alert(data.result);
+                });
+            }
+
+            scope.initialize();
+        }]);
+    </script>
+    <style type="text/css">
+        *{ font-size:12px;margin:0;padding:0;}
+        .row { width:100%;}
+        .button { height:30px;line-height:30px;text-align:center;background-color:lightseagreen;color:#fff;}
+        .button:hover{font-weight:bold;}
+        .sample {width:106px;height:60px;float:left;}
+        .sample-image{width:106px;height:30px;clear:both;}
+        .sample-input{border:none;border-bottom:1px solid #000;}
+    </style>
+</head>
+
+<body>
+    <div ng-controller="samplemark">
+        <div class="row">
+            <div class="button" ng-click="saveMark()">保存</div>
+        </div>
+        <div class="row">
+            <div class="smaple" ng-repeat="sample in samples track by $index">
+                <div class="sample-image">
+                    <img src="{sample.url}" />
+                </div>
+                <div class="sample-input">
+                    <input type="text" ng-model="sample.mark" />
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>

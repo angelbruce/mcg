@@ -1,0 +1,111 @@
+<html>
+	<head>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="zrender.js"></script>
+        <script type="text/javascript" src="echarts.js"></script>
+        <script type="text/javascript">
+            function hasSVG(){ 
+                SVG_NS = 'http://www.w3.org/2000/svg';
+                var doc = document;
+                return !!doc.createElementNS &&  !!doc.createElementNS(SVG_NS, 'svg').createSVGRect; 
+            } 
+
+            $(function(){
+                var containerDom = document.getElementById('container');
+                var myChart = echarts.init(containerDom, null, {renderer: 'svg'});
+                
+                option = {
+                    title: {
+                        text: 'Les Miserables',
+                        subtext: 'Default layout',
+                        top: 'bottom',
+                        left: 'right'
+                    },
+                    tooltip: {},
+                    animation: true,
+                    legend: {
+                        x: 'left',
+                        data:['家人','朋友']
+                    },
+                    series : [ 
+                        {
+                            type:'graph',
+                            layout:'force',
+                            name : "人物关系",
+                            categories : [
+                                { name: '人物' },
+                                { name: '家人'  },
+                                { name:'朋友' }
+                            ],
+                            force: { repulsion: 10 },
+                            roam: 'move',
+                            nodes:[
+                                {category:0, name: '乔布斯', value : 10, label: '乔布斯\n（主要）'},
+                                {category:1, name: '丽萨-乔布斯',value : 2},
+                                {category:1, name: '保罗-乔布斯',value : 3},
+                                {category:1, name: '克拉拉-乔布斯',value : 3},
+                                {category:1, name: '劳伦-鲍威尔',value : 7},
+                                {category:2, name: '史蒂夫-沃兹尼艾克',value : 5},
+                                {category:2, name: '奥巴马',value : 8},
+                                {category:2, name: '比尔-盖茨',value : 9},
+                                {category:2, name: '乔纳森-艾夫',value : 4},
+                                {category:2, name: '蒂姆-库克',value : 4},
+                                {category:2, name: '龙-韦恩',value : 1},
+                            ],
+                            links : [
+                                {source : '丽萨-乔布斯', target : '乔布斯', weight : 1, name: '女儿'},
+                                {source : '保罗-乔布斯', target : '乔布斯', weight : 2, name: '父亲'},
+                                {source : '克拉拉-乔布斯', target : '乔布斯', weight : 1, name: '母亲'},
+                                {source : '劳伦-鲍威尔', target : '乔布斯', weight : 2},
+                                {source : '史蒂夫-沃兹尼艾克', target : '乔布斯', weight : 3, name: '合伙人'},
+                                {source : '奥巴马', target : '乔布斯', weight : 1},
+                                {source : '比尔-盖茨', target : '乔布斯', weight : 6, name: '竞争对手'},
+                                {source : '乔纳森-艾夫', target : '乔布斯', weight : 1, name: '爱将'},
+                                {source : '蒂姆-库克', target : '乔布斯', weight : 1},
+                                {source : '龙-韦恩', target : '乔布斯', weight : 1},
+                                {source : '克拉拉-乔布斯', target : '保罗-乔布斯', weight : 1},
+                                {source : '奥巴马', target : '保罗-乔布斯', weight : 1},
+                                {source : '奥巴马', target : '克拉拉-乔布斯', weight : 1},
+                                {source : '奥巴马', target : '劳伦-鲍威尔', weight : 1},
+                                {source : '奥巴马', target : '史蒂夫-沃兹尼艾克', weight : 1},
+                                {source : '比尔-盖茨', target : '奥巴马', weight : 6},
+                                {source : '比尔-盖茨', target : '克拉拉-乔布斯', weight : 1},
+                                {source : '蒂姆-库克', target : '奥巴马', weight : 1}
+                            ]
+                        }
+                    ]
+                };
+
+                myChart.setOption(option)
+            });
+
+            function getSvg(dom) {
+                var width = dom.width();
+                var height = dom.height();
+                var white = '<rect x="0" y="0" width="' + width + '" height="' + height + '" style="fill:#ffffff;" />';
+                var tags =  document.getElementsByTagName("svg");
+                if(!tags || tags.length < 1) return null;
+                var xml = tags[0].outerHTML;
+                var i = xml.indexOf('>');
+                var pre = xml.substr(0,i+1);
+                var rear = xml.substr(i+1);
+                var svg = pre + white + rear;
+                return svg;
+            }
+            
+            function loadSvg() {
+                var svg = getSvg($("#container"));
+                $("#c").text(svg);
+            }
+        </script>
+	</head>
+	<body>
+        <div id="container" style="width:400px;height:400px;">123123</div>
+        <br />
+        <br />
+        <button onclick="loadSvg()">get the svg</button>
+        <br />
+        <textarea id="c" style="width:100%;height:200px;"></textarea>
+	</body>
+</html>
